@@ -2,16 +2,32 @@
 <html>
 <head>
     <title>Upload File</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h2>Upload File</h2>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Upload</button>
-    </form>
-    {% if success %}
-    <p style="color: green;">{{ success }}</p>
-    {% endif %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h2 class="text-center">Upload File</h2>
+                <form method="post" enctype="multipart/form-data" class="mt-4">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary btn-block">Upload</button>
+                </form>
+                {% if success %}
+                <div class="alert alert-success mt-3">{{ success }}</div>
+                {% endif %}
+
+                <h3 class="mt-5">Uploaded Files</h3>
+                <ul class="list-group mt-3">
+                    {% for file in uploaded_files %}
+                    <li class="list-group-item">
+                        <a href="{{ file.file.url }}">{{ file.file.name }}</a> (uploaded on {{ file.uploaded_at }})
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
